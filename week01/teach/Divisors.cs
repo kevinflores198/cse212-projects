@@ -19,6 +19,15 @@ public static class Divisors {
     private static List<int> FindDivisors(int number) {
         List<int> results = new();
         // TODO problem 1
+        
+
+        // We use for loop to iterate from number 1, we say with an IF statement that if the number divided has a modulo in 0, can be on the list.
+        // We avoud getting the same number, in that case 80 - 79 because i < number, so we will not get the same number in the list.
+        for (int i = 1; i < number; i++) {
+            if (number % i == 0) {
+                results.Add(i);
+            }
+        }
         return results;
     }
 }

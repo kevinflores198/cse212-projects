@@ -13,8 +13,27 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        // Steps:
+        // 1. Create an array with the desired length.
+        // 2. Use a loop to go through each position in the array.
+        // 3. Multiply the number by the current position + 1.
+        // 4. Store the result in the array.
+        // 5. Return the completed array.
+
+        // We make the array to have the result on length.
+        var result = new double[length];
+
+        // with a for loop we can iterate the length used and we are ready 
+        // to multiply the number with that index and add it to the array.
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = number * (i + 1);
+            
+        }
+        
+        return result;
     }
+
 
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
@@ -29,5 +48,19 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // Steps:
+        // Create a new list to run
+        // use for loop to iterate the data list and add elements on the new list with another order rotation
+
+        var rotateList = new List<int>();
+        for (int i = 0; i < data.Count; i++)
+        {
+            rotateList.Add(data[(data.Count - amount + i) % data.Count]);
+        }
+
+        // Clear the original list and add all elements from the rotated list
+        data.Clear();
+        data.AddRange(rotateList);
     }
 }
