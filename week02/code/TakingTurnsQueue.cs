@@ -33,6 +33,7 @@ public class TakingTurnsQueue
     /// </summary>
     public Person GetNextPerson()
     {
+        // if the queue is empty, an exception will be thrown with that error message.
         if (_people.IsEmpty())
         {
             throw new InvalidOperationException("No one in the queue.");
@@ -40,12 +41,15 @@ public class TakingTurnsQueue
         else
         {
             Person person = _people.Dequeue();
-            if (person.Turns > 1)
+            // value is 0 or less, it means the person will have infinite turns, so we will add them back to the queue.
+            if (person.Turns <= 0)
+            { _people.Enqueue(person); }
+            // if not, person will have turns, but will decrease by 1.
+            else if (person.Turns > 1)
             {
                 person.Turns -= 1;
                 _people.Enqueue(person);
             }
-
             return person;
         }
     }

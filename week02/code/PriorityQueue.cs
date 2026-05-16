@@ -9,12 +9,15 @@
     /// </summary>
     /// <param name="value">The value</param>
     /// <param name="priority">The priority</param>
+    
+    // The Enqueue function shall add an item (which contains both data and priority) to the back of the queue.
     public void Enqueue(string value, int priority)
     {
         var newNode = new PriorityItem(value, priority);
         _queue.Add(newNode);
     }
 
+// The Dequeue function shall remove the item with the highest priority and return its value.
     public string Dequeue()
     {
         if (_queue.Count == 0) // Verify the queue is not empty
@@ -22,9 +25,10 @@
             throw new InvalidOperationException("The queue is empty.");
         }
 
-        // Find the index of the item with the highest priority to remove
+        // Find the index of the item with the highest priority to remove 
+        // the =1 was removed becuase it always will avoid the first item in the queue.
         var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++)
+        for (int index = 1; index < _queue.Count; index++)
         {
             if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
                 highPriorityIndex = index;
@@ -32,6 +36,8 @@
 
         // Remove and return the item with the highest priority
         var value = _queue[highPriorityIndex].Value;
+        // I added removeAt to delete the item needed.
+        _queue.RemoveAt(highPriorityIndex);
         return value;
     }
 
