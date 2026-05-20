@@ -47,10 +47,15 @@ public class TakingTurnsQueue
             // if not, person will have turns, but will decrease by 1.
             else if (person.Turns > 1)
             {
-                person.Turns -= 1;
-                _people.Enqueue(person);
+                person.Turns--;
+
+                if (person.Turns > 0)
+                {
+                    _people.Enqueue(person);
+                }
             }
             return person;
+
         }
     }
 

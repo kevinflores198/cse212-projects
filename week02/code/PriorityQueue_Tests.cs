@@ -6,84 +6,99 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 public class PriorityQueueTests
 {
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
-    // Defect(s) Found: 
-    public void TestPriorityQueue_1()
+public void TestPriorityQueue_EmptyQueue()
+{
+    var e = new PriorityQueue();
+
+    try
     {
-        var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+        e.Dequeue();
+        Assert.Fail("Expected an exception for empty queue.");
+    }
+    catch (InvalidOperationException ex)
+    {
+        Assert.AreEqual("The queue is empty.", ex.Message);
+    }
+}
+
+[TestMethod]
+public void TestPriorityQueue_HighestPriority()
+{
+    var e = new PriorityQueue();
+
+    e.Enqueue("A", 1);
+    e.Enqueue("B", 5);
+    e.Enqueue("C", 3);
+
+    if (e.Dequeue() != "B")
+    {
+        Assert.Fail("Expected B to be dequeued first.");
+    }
+}
+
+[TestMethod]
+public void TestPriorityQueue_FIFOWithSamePriority()
+{
+    var e = new PriorityQueue();
+
+    e.Enqueue("A", 2);
+    e.Enqueue("B", 2);
+    e.Enqueue("C", 2);
+
+    if (e.Dequeue() != "A")
+    {
+        Assert.Fail("Expected A to be dequeued first because of FIFO order.");
     }
 
-    [TestMethod]
-    // Scenario: 
-    // Expected Result: 
-    // Defect(s) Found: 
-    public void TestPriorityQueue_2()
+    if (e.Dequeue() != "B")
     {
-        var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+        Assert.Fail("Expected B to be dequeued second because of FIFO order.");
     }
 
-
-
-
-    // Add more test cases as needed below.
-
-    // cheking if the priority queue is working as expected with multiple items and priorities.
-    [TestMethod]
-    public void TestPriorityQueue_3()
+    if (e.Dequeue() != "C")
     {
-        var e = new PriorityQueue();
-        e.Enqueue("A", 1);
-        e.Enqueue("B", 2);
-        e.Enqueue("C", 3);
+        Assert.Fail("Expected C to be dequeued third because of FIFO order.");
+    }
+}
 
-        if (e.Dequeue() != "C")
-        {
-            Assert.Fail("Expected C to be dequeued first.");
-        }
+[TestMethod]
+public void TestPriorityQueue_MultipleDequeue()
+{
+    var e = new PriorityQueue();
 
-        if (e.Dequeue() != "B")
-        {
-            Assert.Fail("Expected B to be dequeued second.");
-        }
+    e.Enqueue("Low", 1);
+    e.Enqueue("Medium", 5);
+    e.Enqueue("High", 10);
 
-        if (e.Dequeue() != "A")
-        {
-            Assert.Fail("Expected A to be dequeued third.");
-        }
-        
+    if (e.Dequeue() != "High")
+    {
+        Assert.Fail("Expected High first.");
     }
 
-    // checking if the priority queue is working as expected with multiple items and priorities, including duplicate priorities.
-    [TestMethod]
-    public void TestPriorityQueue_4()
+    if (e.Dequeue() != "Medium")
     {
-        var e = new PriorityQueue();
-        e.Enqueue("A", 1);
-        e.Enqueue("B", 2);
-        e.Enqueue("C", 3);
-        e.Enqueue("D", 2);
-
-        if (e.Dequeue() != "C")
-        {
-            Assert.Fail("Expected C to be dequeued first.");
-        }
-
-        if (e.Dequeue() != "D")
-        {
-            Assert.Fail("Expected D to be dequeued second.");
-        }
-
-        if (e.Dequeue() != "B")
-        {
-            Assert.Fail("Expected B to be dequeued third.");
-        }
-
-        if (e.Dequeue() != "A")
-        {
-            Assert.Fail("Expected A to be dequeued fourth.");
-        }
+        Assert.Fail("Expected Medium second.");
     }
+
+    if (e.Dequeue() != "Low")
+    {
+        Assert.Fail("Expected Low third.");
+    }
+}
+
+[TestMethod]
+public void TestPriorityQueue_RemoveItemCorrectly()
+{
+    var e = new PriorityQueue();
+
+    e.Enqueue("A", 1);
+    e.Enqueue("B", 3);
+
+    e.Dequeue();
+
+    if (e.Dequeue() != "A")
+    {
+        Assert.Fail("Expected A after removing B.");
+    }
+}
 }
