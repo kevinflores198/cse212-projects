@@ -22,7 +22,26 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        // we implemente the O(1) to look up easily the word and reverse it to find the pair
+        HashSet<string> wordSet = new HashSet<string>(words);
+        // we create the list to store the pairs of words.
+        List<string> pairs = new List<string>();
+        // we verify the pairs and what is going to be with the word when we find the pair.
+        foreach (string word in words)
+        {
+            // we use .Reverse to reverse the word
+            string reversed = new string(word.Reverse().ToArray());
+            if (wordSet.Contains(reversed) && word != reversed)
+            {
+                // we create the string that pair the words found.
+                pairs.Add($"{word} & {reversed}");
+                // we remove the pairs used to avid duplicates.
+                wordSet.Remove(word);
+                wordSet.Remove(reversed);
+            }
+        }
+
+        return pairs.ToArray();
     }
 
     /// <summary>
@@ -43,6 +62,21 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            // We use trim to remove spaces and fields[3]
+            //  to get the degree information and we add 
+            // it to the map with the count of people 
+            // that have that degree.
+            string degree = fields[3].Trim();
+            // we determine if the degree is already in the map, if it is, we use the counter.
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            // if not we add the degree to the map with a count of 1.
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -67,7 +101,45 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        // we create a dictionary to count the occurrences of each letter in word1.
+        Dictionary<char, int> letterCount = new Dictionary<char, int>();
+        // we iterate through each letter in word1, ignoring spaces and cases.
+        foreach (char letter in word1.ToLower())
+        {
+            if (letter != ' ' && letterCount.ContainsKey(letter))
+            {
+                letterCount[letter]++;
+            }
+            else if (letter != ' ')
+            {
+                letterCount[letter] = 1;
+            }
+
+        }
+        // 
+        foreach (char letter in word2.ToLower())
+        {
+            if (letter != ' ')
+            {
+                if (!letterCount.ContainsKey(letter) || letterCount[letter] == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    letterCount[letter]--;
+                }
+            }
+        }
+        // we check if all counts in the dictionary are zero, if they are, the words are anagrams, otherwise they are not.
+        foreach (var count in letterCount.Values)
+        {
+            if (count != 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /// <summary>
@@ -101,6 +173,9 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+        return featureCollection?.Features
+    .Where(f => f.Properties.Place != null)
+    .Select(f => $"{f.Properties.Place} - Mag {f.Properties.Mag}")
+    .ToArray() ?? [];
     }
 }

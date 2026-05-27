@@ -23,6 +23,7 @@ public class Maze
     public Maze(Dictionary<ValueTuple<int, int>, bool[]> mazeMap)
     {
         _mazeMap = mazeMap;
+
     }
 
     // TODO Problem 4 - ADD YOUR CODE HERE
@@ -33,6 +34,15 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+        _mazeMap.TryGetValue((_currX, _currY), out bool[] directions);
+        if (directions[0])
+        {
+            _currX--;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -42,6 +52,14 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+        _mazeMap.TryGetValue((_currX, _currY), out bool[] directions);
+        if (directions[1])        {
+            _currX++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -51,6 +69,15 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+        _mazeMap.TryGetValue((_currX, _currY), out bool[] directions);
+        if (directions[2])
+        {
+            _currY--;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -60,6 +87,15 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+        _mazeMap.TryGetValue((_currX, _currY), out bool[] directions);
+        if (directions[3])
+        {
+            _currY++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     public string GetStatus()

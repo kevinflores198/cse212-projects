@@ -24,7 +24,8 @@ public class Translator
     /// <returns>fixed array of divisors</returns>
     public void AddWord(string fromWord, string toWord)
     {
-        // ADD YOUR CODE HERE
+        // we add words using the put map operation of the dictionary.
+        _words.Add(fromWord, toWord);
     }
 
     /// <summary>
@@ -35,6 +36,13 @@ public class Translator
     public string Translate(string fromWord)
     {
         // ADD YOUR CODE HERE
-        return "";
+
+        // we verify if the word exist into the Map, if it appears, we return the translation
+        if (_words.ContainsKey(fromWord))
+        {
+            return _words[fromWord];
+        }
+        // if it does not appear, we return "???"
+        return "???";
     }
 }
