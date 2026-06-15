@@ -1,9 +1,8 @@
 using System.Collections;
-
 public class BinarySearchTree : IEnumerable<int>
 {
     private Node? _root;
-
+ 
     /// <summary>
     /// Insert a new node in the BST.
     /// </summary>
@@ -22,7 +21,7 @@ public class BinarySearchTree : IEnumerable<int>
             _root.Insert(value);
         }
     }
-
+ 
     /// <summary>
     /// Check to see if the tree contains a certain value
     /// </summary>
@@ -32,7 +31,7 @@ public class BinarySearchTree : IEnumerable<int>
     {
         return _root != null && _root.Contains(value);
     }
-
+ 
     /// <summary>
     /// Yields all values in the tree
     /// </summary>
@@ -41,7 +40,7 @@ public class BinarySearchTree : IEnumerable<int>
         // call the generic version of the method
         return GetEnumerator();
     }
-
+ 
     /// <summary>
     /// Iterate forward through the BST
     /// </summary>
@@ -54,7 +53,7 @@ public class BinarySearchTree : IEnumerable<int>
             yield return number;
         }
     }
-
+ 
     private void TraverseForward(Node? node, List<int> values)
     {
         if (node is not null)
@@ -64,7 +63,7 @@ public class BinarySearchTree : IEnumerable<int>
             TraverseForward(node.Right, values);
         }
     }
-
+ 
     /// <summary>
     /// Iterate backward through the BST.
     /// </summary>
@@ -77,12 +76,20 @@ public class BinarySearchTree : IEnumerable<int>
             yield return number;
         }
     }
-
+ 
     private void TraverseBackward(Node? node, List<int> values)
     {
         // TODO Problem 3
+        // This is the same as TraverseForward, but reversed:
+        // we go right first (bigger values), then current node, then left (smaller values).
+        if (node is not null)
+        {
+            TraverseBackward(node.Right, values);
+            values.Add(node.Data);
+            TraverseBackward(node.Left, values);
+        }
     }
-
+ 
     /// <summary>
     /// Get the height of the tree
     /// </summary>
@@ -92,13 +99,13 @@ public class BinarySearchTree : IEnumerable<int>
             return 0;
         return _root.GetHeight();
     }
-
+ 
     public override string ToString()
     {
         return "<Bst>{" + string.Join(", ", this) + "}";
     }
 }
-
+ 
 public static class IntArrayExtensionMethods {
     public static string AsString(this IEnumerable array) {
         return "<IEnumerable>{" + string.Join(", ", array.Cast<int>()) + "}";
